@@ -1,0 +1,1 @@
+A generated style.css file will be created from the 'scss' directory. This is ignored on purpose.
