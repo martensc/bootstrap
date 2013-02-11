@@ -1,18 +1,19 @@
 
-@media(min-width: 980px) {
-  body {
-    padding-top: 60px;
-  }
+body {
+  min-width: 280px;
 }
 
-.navbar .logo { 
-  margin-top: 5px;
-  margin-right: 10px;
+.header {
+  padding-top: 35px;
+}
+
+.header .navbar {
+  clear: both;
 }
 
 #site-name {
   line-height: 1;
-  margin: 0;
+  margin: 0 0 20px;
 }
 
 .submitted {
@@ -43,33 +44,6 @@ ul.action-links [class*=" icon-"] {
 }
 
 /**
- * Admin Styling
- */
-
-/* Fix Toolbar for .navbar-fixed-top */
-body.toolbar .navbar-fixed-top {
- top: 30px;
-}
-
-body.toolbar-drawer .navbar-fixed-top {
- top: 65px;
-}
-
-@media(min-width: 980px) {
-  body.toolbar {
-    padding-top: 94px !important;
-  }
-
-  body.toolbar-drawer {
-    padding-top: 129px !important;
-  }
-}
-
-html.overlay-open .navbar-fixed-top {
-  z-index: 400;
-}
-
-/**
  * Search form stylings.
  */
 
@@ -83,24 +57,10 @@ fieldset.search-advanced {
   margin-top: 1em;
 }
 
-/* Admin toolbar fix */
-body.admin-expanded.admin-vertical.admin-nw .navbar,
-body.admin-expanded.admin-vertical.admin-sw .navbar {
-  margin-left: 260px;
-}
-
-div#admin-toolbar {
-  z-index: 500;
-}
-
 /* Admin_menu fix */
 #admin-menu {
   z-index: 1100;
   position: fixed; 
-}
-
-body.admin-menu .navbar-fixed-top {
-  top: 30px; 
 }
 
 #admin-menu .dropdown li {
