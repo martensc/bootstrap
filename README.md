@@ -4,7 +4,7 @@ This is an altered version of the Bootstrap Drupal module. We've basically made 
 
 ## Instructions
 
-1. Clone Thomas McDonald's repo [bootstrap-sass](https://github.com/thomas-mcdonald/bootstrap-sass)
+1. Clone Thomas McDonald's repo [bootstrap-sass](https://github.com/thomas-mcdonald/bootstrap-sass) & install the gem `bootstrap-sass`
 2. Copy the `bootstrap/vendor/assets/stylesheets/bootstrap` folder and put it inside the bootstrap theme folder, `[path to themes]/boostrap/assets/scss/bootstrap`
 3. Once you have the bootstrap partials in-place, you can run `compass watch` on the root of your theme. This will generate the style.css file in your css directory.
 
