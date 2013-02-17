@@ -46,6 +46,12 @@
 
   <div class="row">
 
+    <?php if (!empty($page['highlighted'])): ?>
+      <div class="highlighted span12">
+        <?php print render($page['highlighted']); ?>
+      </div>
+    <?php endif; ?>
+
     <?php if (!empty($page['sidebar_first'])): ?>
       <aside class="span3" role="complementary">
         <?php print render($page['sidebar_first']); ?>
@@ -53,9 +59,6 @@
     <?php endif; ?>  
 
     <section class="<?php print _bootstrap_content_span($columns); ?>">  
-      <?php if (!empty($page['highlighted'])): ?>
-        <div class="highlighted hero-unit"><?php print render($page['highlighted']); ?></div>
-      <?php endif; ?>
       <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>
