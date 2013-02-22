@@ -1,19 +1,18 @@
 
-body {
-  min-width: 280px;
+@media(min-width: 980px) {
+  body {
+    padding-top: 60px;
+  }
 }
 
-.header {
-  padding-top: 35px;
-}
-
-.header .navbar {
-  clear: both;
+.navbar .logo { 
+  margin-top: 5px;
+  margin-right: 10px;
 }
 
 #site-name {
   line-height: 1;
-  margin: 0 0 20px;
+  margin: 0;
 }
 
 .submitted {
@@ -44,29 +43,50 @@ ul.action-links [class*=" icon-"] {
 }
 
 /**
- * Search form stylings.
+ * Admin Styling
  */
 
-.region-navigation form#search-block-form {
-  margin-bottom: 5px;
-  margin-top: 5px;
+/* Fix Toolbar for .navbar-fixed-top */
+body.toolbar .navbar-fixed-top {
+ top: 30px;
 }
 
-@media(max-width: 979px) {
-  .region-navigation form#search-block-form {
-    float: none;
+body.toolbar-drawer .navbar-fixed-top {
+ top: 65px;
+}
+
+@media(min-width: 980px) {
+  body.toolbar {
+    padding-top: 94px !important;
+  }
+
+  body.toolbar-drawer {
+    padding-top: 129px !important;
   }
 }
 
-fieldset.search-advanced {
-  padding-bottom: 1.5em;
-  margin-top: 1em;
+html.overlay-open .navbar-fixed-top {
+  z-index: 400;
+}
+
+/* Admin toolbar fix */
+body.admin-expanded.admin-vertical.admin-nw .navbar,
+body.admin-expanded.admin-vertical.admin-sw .navbar {
+  margin-left: 260px;
+}
+
+div#admin-toolbar {
+  z-index: 500;
 }
 
 /* Admin_menu fix */
 #admin-menu {
   z-index: 1100;
   position: fixed; 
+}
+
+body.admin-menu .navbar-fixed-top {
+  top: 30px; 
 }
 
 #admin-menu .dropdown li {
@@ -89,11 +109,6 @@ input, textarea, select, .uneditable-input {
   -webkit-box-sizing: inherit;
   box-sizing: inherit;
   width: auto;
-}
-
-/* Vertical tabs form elements alighment */
-.vertical-tabs .form-item{
-  margin: 1em 0;
 }
 
 /* Collapsible field groups fix */
