@@ -268,25 +268,7 @@ function bootstrap_status_messages($variables) {
  */
 function bootstrap_css_alter(&$css) {
   $theme_path = drupal_get_path('theme', 'bootstrap');
-
   $excludes = _bootstrap_alter(bootstrap_theme_get_info('exclude'), 'css');
-
-  if (theme_get_setting('cdn_bootstrap')){
-    //first add the existing bootstrap css to the exclude
-    $excludes[$theme_path . '/bootstrap/css/bootstrap.css'] = FALSE;
-    $excludes[$theme_path . '/bootstrap/css/bootstrap-responsive.css'] = FALSE ;
-    
-    //and then add the cdn css
-    $cdn_url = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css';
-    $css[$cdn_url]['data'] = $cdn_url;
-    $css[$cdn_url]['type'] = 'external';
-    $css[$cdn_url]['every_page'] = TRUE;
-    $css[$cdn_url]['media'] = 'all';
-    $css[$cdn_url]['preprocess'] = TRUE;
-    $css[$cdn_url]['group'] = CSS_THEME;
-    $css[$cdn_url]['weight'] = -1;
-    $css[$cdn_url]['browsers'] = array('IE' => TRUE, '!IE' => TRUE);
-  }
   $css = array_diff_key($css, $excludes);
 }
 
@@ -294,49 +276,23 @@ function bootstrap_css_alter(&$css) {
  * Implements hook_js_alter().
  */
 function bootstrap_js_alter(&$js) {
-  $theme_path = drupal_get_path('theme', 'bootstrap');
   $files = array();
-
-  $excludes = _bootstrap_alter(bootstrap_theme_get_info('exclude'), 'js');
-
-  // If bootstrap_ui available, we should not add js from theme info file.
-  if (module_exists('bootstrap_ui')) {
-    libraries_load('bootstrap', 'minified');
-    $excludes[drupal_get_path('theme', 'bootstrap') . '/bootstrap/js/bootstrap.js'] = array();
-  }
-
-  $js = array_diff_key($js, $excludes);
-  if (theme_get_setting('cdn_jquery')) {
-    // Add jQuery and the switch script to the $files array
-    $files[] = '//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
-
-    if (theme_get_setting('cdn_bootstrap')) {
-      $files[] = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js';
-    }
-    else {
-      $files[] = $theme_path . '/bootstrap/js/bootstrap.js';
-    }
-    $files[] = $theme_path . '/js/switch.js';
-  }
-  else {
-    if (theme_get_setting('cdn_bootstrap')) {
-      $files[] = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js';
-    }
-    else {
-      $files[] = $theme_path . '/bootstrap/js/bootstrap.js';
-    }
-  }
-
-  // Rearrange / Add JS
-  $group = -50;
-  $weight = -100;
-  foreach ($files as $file) {
-    if (!isset($js[$file])) {
-      $js[$file] = drupal_js_defaults();
-      $js[$file]['data'] = $file;
-      $js[$file]['group'] = $group;
-      $js[$file]['weight'] = $weight;
-      $weight++;
+  // exclude backend pages to avoid core js not working anymore
+  // you could also just use a backend theme to avoid this
+  if (arg(0) != 'admin' || !(arg(1) == 'add' && arg(2) == 'edit') || arg(0) != 'panels' || arg(0) != 'ctools') {
+    if (theme_get_setting('up_jquery')) {
+    $theme_path = drupal_get_path('theme', 'bootstrap');
+    $new_jquery = $theme_path . '/assets/js/jquery.min.js';
+ 
+    // Copy the current jQuery file settings and change
+    $js[$new_jquery] = $js['misc/jquery.js'];
+ 
+    // Update necessary settings
+    $js[$new_jquery]['version'] = '1.9.1';
+    $js[$new_jquery]['data'] = $new_jquery;
+ 
+    // Finally remove the original jQuery
+    unset($js['misc/jquery.js']);
     }
   }
 }

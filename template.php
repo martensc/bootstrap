@@ -110,6 +110,32 @@ function bootstrap_process_html_tag(&$variables) {
  * @see page.tpl.php
  */
 function bootstrap_preprocess_page(&$variables) {
+
+  // Define theme path
+  $path = drupal_get_path('theme', 'bootstrap');
+
+  //Add in bootstrap js if up_jquery is set
+  if (theme_get_setting('up_jquery')) {
+    drupal_add_js($path . '/assets/js/bootstrap.min.js',
+      array(
+        'type' => 'file',
+        'weight' => 1,
+        'group' => JS_LIBRARY,
+        'every_page' => TRUE
+      )
+    );
+  }
+
+  // Add in theme lib file
+  drupal_add_js($path . '/assets/js/lib.js',
+    array(
+      'type' => 'file',
+      'weight' => 1,
+      'group' => JS_THEME,
+      'every_page' => TRUE
+    )
+  );
+
   // Add information about the number of sidebars.
   if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
     $variables['columns'] = 3;
