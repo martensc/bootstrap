@@ -1,19 +1,18 @@
 
-body {
-  min-width: 280px;
-}
+// @media(min-width: 980px) {
+//   body {
+//     padding-top: 60px;
+//   }
+// }
 
-.header {
-  padding-top: 35px;
-}
-
-.header .navbar {
-  clear: both;
+.navbar .logo { 
+  margin-top: 5px;
+  margin-right: 10px;
 }
 
 #site-name {
   line-height: 1;
-  margin: 0 0 20px;
+  margin: 0;
 }
 
 .submitted {
@@ -47,24 +46,47 @@ ul.action-links [class*=" icon-"] {
  * Admin Styling
  */
 
+/* Fix Toolbar for .navbar-fixed-top */
+// body.toolbar .navbar-fixed-top {
+//  top: 30px;
+// }
+
+// body.toolbar-drawer .navbar-fixed-top {
+//  top: 65px;
+// }
+
+// @media(min-width: 980px) {
+//   body.toolbar {
+//     padding-top: 94px !important;
+//   }
+
+//   body.toolbar-drawer {
+//     padding-top: 129px !important;
+//   }
+// }
+
+// html.overlay-open .navbar-fixed-top {
+//   z-index: 400;
+// }
+
+/**
+ * Search form stylings.
+ */
+
 .region-navigation form#search-block-form {
   margin-bottom: 5px;
   margin-top: 5px;
 }
 
+@media(max-width: 979px) {
+  .region-navigation form#search-block-form {
+    float: none;
+  }
+}
+
 fieldset.search-advanced {
   padding-bottom: 1.5em;
   margin-top: 1em;
-}
-
-@media(min-width: 980px) {
-  body.toolbar {
-    padding-top: 30px !important;
-  }
-
-  body.toolbar-drawer {
-    padding-top: 65px !important;
-  }
 }
 
 /* Admin toolbar fix */
@@ -82,6 +104,10 @@ div#admin-toolbar {
   z-index: 1100;
   position: fixed; 
 }
+
+// body.admin-menu .navbar-fixed-top {
+//   top: 30px; 
+// }
 
 #admin-menu .dropdown li {
   line-height: normal;
@@ -199,4 +225,25 @@ e.g. multipage*/
 
 .form-actions{
   clear: both;
+}
+
+////////////////////////////////////
+// Custom CM styles
+////////////////////////////////////
+
+body {
+  min-width: 280px;
+}
+
+.header {
+  padding-top: 35px;
+
+  .navbar {
+    clear: both;
+  }
+
+  #site-name {
+    line-height: 1;
+    margin: 0 0 20px;
+  }
 }

@@ -21,6 +21,7 @@ settings[toggle_search] = 1
 ;Exclude
 ;javascript
 ;exclude[js][] = 'modules/contextual/contextual.js'
+;exclude[js][] = 'misc/jquery.js'
 
 ;css
 ;exclude[css][] = 'misc/vertical-tabs.css'

@@ -268,7 +268,25 @@ function bootstrap_status_messages($variables) {
  */
 function bootstrap_css_alter(&$css) {
   $theme_path = drupal_get_path('theme', 'bootstrap');
+
   $excludes = _bootstrap_alter(bootstrap_theme_get_info('exclude'), 'css');
+
+  if (theme_get_setting('cdn_bootstrap')){
+    //first add the existing bootstrap css to the exclude
+    $excludes[$theme_path . '/bootstrap/css/bootstrap.css'] = FALSE;
+    $excludes[$theme_path . '/bootstrap/css/bootstrap-responsive.css'] = FALSE ;
+    
+    //and then add the cdn css
+    $cdn_url = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css';
+    $css[$cdn_url]['data'] = $cdn_url;
+    $css[$cdn_url]['type'] = 'external';
+    $css[$cdn_url]['every_page'] = TRUE;
+    $css[$cdn_url]['media'] = 'all';
+    $css[$cdn_url]['preprocess'] = TRUE;
+    $css[$cdn_url]['group'] = CSS_THEME;
+    $css[$cdn_url]['weight'] = -1;
+    $css[$cdn_url]['browsers'] = array('IE' => TRUE, '!IE' => TRUE);
+  }
   $css = array_diff_key($css, $excludes);
 }
 
@@ -288,7 +306,7 @@ function bootstrap_js_alter(&$js) {
     $js[$new_jquery] = $js['misc/jquery.js'];
  
     // Update necessary settings
-    $js[$new_jquery]['version'] = '1.9.1';
+    $js[$new_jquery]['version'] = '1.8.3';
     $js[$new_jquery]['data'] = $new_jquery;
  
     // Finally remove the original jQuery

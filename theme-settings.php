@@ -29,7 +29,7 @@ function bootstrap_form_system_theme_settings_alter(&$form, $form_state, $form_i
     '#type'          => 'checkbox',
     '#title'         => t('Load in a newer version of jQuery for front-end only.'),
     '#default_value' => theme_get_setting('up_jquery'),
-    '#description'   => t('By enabling, you will be running the latest stable version of jQuery (1.9.1) on the front-end of the site. It allows for more flexability and ability to utilize the Twitter Bootstrap javascript library.') 
+    '#description'   => t('By enabling, you will be running jQuery (1.8.3) on the front-end of the site. It allows for more flexability and ability to utilize the Twitter Bootstrap javascript library.') 
       . '<div class="alert alert-error">' . t('WARNING: some Drupal contrib modules are built to run on an older version of jQuery.'). '</div>',
   );
 }
