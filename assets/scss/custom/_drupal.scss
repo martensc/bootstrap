@@ -247,3 +247,12 @@ body {
     margin: 0 0 20px;
   }
 }
+
+// BxSlider Views slideshow fix
+.views-slideshow-bxslider {
+
+  ul.bxslider {
+    margin: 0;
+    @include clearfix;
+  }
+}
