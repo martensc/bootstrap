@@ -11,7 +11,6 @@ function theme_bootstrap_links($variables) {
   $links = $variables['links'];
   $attributes = $variables['attributes'];
   $heading = $variables['heading'];
-  //$dropdown = $variables['dropdown'];
 
   global $language_url;
   $output = '';
@@ -160,11 +159,10 @@ function theme_bootstrap_btn_dropdown($variables) {
 
   return $output;
 }
-/*
- * heming functions overwrites
- *
- */
 
+/*
+ * Overwrites the default item list to make it prettier
+ */
 function bootstrap_item_list($variables) {
   $items = $variables['items'];
   $title = $variables['title'];
@@ -179,10 +177,12 @@ function bootstrap_item_list($variables) {
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
     $num_items = count($items);
-    foreach ($items as $i => $item) {
+    $i = 0;
+    foreach ($items as $item) {
       $attributes = array();
       $children = array();
       $data = '';
+      $i++;
       if (is_array($item)) {
         foreach ($item as $key => $value) {
           if ($key == 'data') {
@@ -203,10 +203,10 @@ function bootstrap_item_list($variables) {
         // Render nested list.
         $data .= theme_item_list(array('items' => $children, 'title' => NULL, 'type' => $type, 'attributes' => $attributes));
       }
-      if ($i == 0) {
+      if ($i == 1) {
         $attributes['class'][] = 'first';
       }
-      if ($i == $num_items - 1) {
+      if ($i == $num_items) {
         $attributes['class'][] = 'last';
       }
       $output .= '<li' . drupal_attributes($attributes) . '>' . $data . "</li>\n";
@@ -241,7 +241,7 @@ function bootstrap_status_messages($variables) {
   foreach (drupal_get_messages($display) as $type => $messages) {
     $class = (isset($status_class[$type])) ? ' alert-' . $status_class[$type] : '';
     $output .= "<div class=\"alert alert-block$class\">\n";
-    $output .= "  <a class=\"close\" data-dismiss=\"alert\" href=\"#\">x</a>\n";
+    $output .= "  <a class=\"close\" data-dismiss=\"alert\" href=\"#\">&times;</a>\n";
 
     if (!empty($status_heading[$type])) {
       $output .= '<h2 class="element-invisible">' . $status_heading[$type] . "</h2>\n";
@@ -282,7 +282,7 @@ function bootstrap_js_alter(&$js) {
   if (arg(0) != 'admin' || !(arg(1) == 'add' && arg(2) == 'edit') || arg(0) != 'panels' || arg(0) != 'ctools') {
     if (theme_get_setting('up_jquery')) {
     $theme_path = drupal_get_path('theme', 'bootstrap');
-    $new_jquery = $theme_path . '/assets/js/jquery.min.js';
+    $new_jquery = $theme_path . '/assets/js/jquery-1.8.3.min.js';
  
     // Copy the current jQuery file settings and change
     $js[$new_jquery] = $js['misc/jquery.js'];
@@ -309,6 +309,64 @@ function _bootstrap_alter($files, $type) {
   }
   return $output;
 }
+
+/**
+ * Returns HTML for Bootstrap's modal.
+ */
+function bootstrap_bootstrap_modal($variables) {
+  $body = $variables['body'];
+  $links = $variables['footer'];
+  $heading = $variables['heading'];
+  $attributes = $variables['attributes'];
+
+  if (isset($variables['attributes']['class']) && is_string($variables['attributes']['class'])) { // Convert classes to an array.
+    $variables['attributes']['class'] = explode(' ', $variables['attributes']['class']);
+  }
+
+  $variables['attributes']['class'][] = 'modal';
+
+  $output = '<div'. drupal_attributes($variables['attributes']) .'>';
+  $output .= '<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+  $output .= '<h3>'. check_plain($variables['heading']) .'</h3>';
+  $output .= '</div>';
+  $output .= '<div class="modal-body">'. render($variables['body']) .'</div>';
+  $output .= '<div class="modal-footer">'. render($variables['footer']) .'</div>';
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
+ * Returns HTML for Bootstrap's Collapse/Accordion.
+ */
+function bootstrap_bootstrap_accordion($variables) {
+  $elements = $variables['elements'];
+
+  if (empty($variables['id'])) {
+    $accordion_id = 'accordion-'. md5($elements);
+  }
+  else {
+    $accordion_id = check_plain($variables['id']);
+  }
+
+  $output = '<div class="accordion" id="'.$accordion_id.'">';
+
+  foreach ($elements as $id => $item) {
+    $output .= '<div class="accordion-group"><div class="accordion-heading">';
+    $output .= '<a class="accordion-toggle" data-toggle="collapse" data-parent="#'. $accordion_id .'" href="#'. $id .'">'. check_plain($item['header']) .'</a></div>';
+    $output .= '<div id="'. $id .'" class="accordion-body collapse in"><div class="accordion-inner">';
+    $output .= render($item['content']);
+    $output .= '</div></div></div>';
+  }
+
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
+ * Add stripping to tables (in case they don't have .table-no-striping class)
+ */
 function bootstrap_preprocess_table(&$variables) {
 
   if (isset($variables['attributes']['class']) && is_string($variables['attributes']['class'])) {

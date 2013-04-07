@@ -14,15 +14,13 @@ regions[footer]         = 'Footer'
 ;stylesheets[all][] = bootstrap/css/bootstrap-responsive.css
 stylesheets[all][] = assets/css/style.css
 
-settings[toggle_name] = 0
+settings[toggle_logo] = 0
+settings[toggle_name] = 1
 settings[toggle_search] = 1
-settings[cdn_bootstrap] = 0
-settings[cdn_jquery] = 0
 
 ;Exclude
 ;javascript
 ;exclude[js][] = 'modules/contextual/contextual.js'
-;exclude[js][] = 'misc/jquery.js'
 
 ;css
 ;exclude[css][] = 'misc/vertical-tabs.css'
