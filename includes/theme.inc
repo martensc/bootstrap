@@ -294,25 +294,10 @@ function bootstrap_css_alter(&$css) {
  * Implements hook_js_alter().
  */
 function bootstrap_js_alter(&$js) {
-  $files = array();
-  // exclude backend pages to avoid core js not working anymore
-  // you could also just use a backend theme to avoid this
-  if (arg(0) != 'admin' || !(arg(1) == 'add' && arg(2) == 'edit') || arg(0) != 'panels' || arg(0) != 'ctools') {
-    if (theme_get_setting('up_jquery')) {
-    $theme_path = drupal_get_path('theme', 'bootstrap');
-    $new_jquery = $theme_path . '/assets/js/jquery-1.8.3.min.js';
- 
-    // Copy the current jQuery file settings and change
-    $js[$new_jquery] = $js['misc/jquery.js'];
- 
-    // Update necessary settings
-    $js[$new_jquery]['version'] = '1.8.3';
-    $js[$new_jquery]['data'] = $new_jquery;
- 
-    // Finally remove the original jQuery
-    unset($js['misc/jquery.js']);
-    }
-  }
+
+  // Replace jQuery
+  require_once drupal_get_path('theme', 'bootstrap') . '/includes/replace.inc';
+  bootstrap_js_alter_replace($js);
 }
 
 function _bootstrap_alter($files, $type) {

@@ -128,9 +128,13 @@ function bootstrap_preprocess_page(&$variables) {
   // Define theme path
   $path = drupal_get_path('theme', 'bootstrap');
 
-  //Add in bootstrap js if up_jquery is set
-  if (theme_get_setting('up_jquery')) {
-    drupal_add_js($path . '/assets/js/bootstrap.min.js',
+  // Define minify or none
+  $min = theme_get_setting('bootstrap_compression') ? theme_get_setting('bootstrap_compression') : 'min';
+  $min = $min == 'none' ? '' : '.min';
+
+  //Add in bootstrap js if enable_bootstrap is set
+  if (theme_get_setting('enable_bootstrap')) {
+    drupal_add_js($path . '/assets/js/bootstrap' . $min . '.js',
       array(
         'type' => 'file',
         'weight' => 1,
